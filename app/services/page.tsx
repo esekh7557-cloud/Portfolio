@@ -139,7 +139,7 @@ export default function Services() {
                       <p className="text-white/70 text-lg leading-relaxed">{service.description}</p>
 
                       <div>
-                        <h4 className="font-bold text-white mb-4 text-lg uppercase tracking-wide">What's Included:</h4>
+                        <h4 className="font-bold text-white mb-4 text-lg uppercase tracking-wide">What&apos;s Included:</h4>
                         <ul className="space-y-3">
                           {service.features.map((feature, idx) => (
                             <li key={idx} className="flex items-start gap-3 text-white/80">
@@ -265,7 +265,7 @@ export default function Services() {
           <div className="p-12 md:p-16 rounded-3xl bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-500/20 border border-white/30 text-center space-y-8">
             <h2 className="text-3xl md:text-5xl font-bold">Limited Slots Available ✨</h2>
             <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
-              I only take 5 projects per month to ensure quality work. Let's discuss your project before slots fill up.
+              I only take 5 projects per month to ensure quality work. Let&apos;s discuss your project before slots fill up.
             </p>
             <a
               href="/contact"

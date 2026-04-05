@@ -206,7 +206,9 @@ export default function Home() {
                 key={idx}
                 className="p-8 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-white/20 hover:border-white/40 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10 space-y-4"
               >
-                <p className="text-white/80 italic text-lg leading-relaxed">"{testimonial.quote}"</p>
+                <p className="text-white/80 italic text-lg leading-relaxed">
+                  &ldquo;{testimonial.quote}&rdquo;
+                </p>
                 <div>
                   <p className="font-semibold text-white">{testimonial.author}</p>
                   <p className="text-white/60 text-sm">{testimonial.role}</p>
@@ -233,7 +235,7 @@ export default function Home() {
                 Start Your Project
               </Link>
               <a
-                href="https://wa.me/919876543210"
+                href="https://wa.me/917385693147"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 rounded-lg border-2 border-white/30 text-white font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm"

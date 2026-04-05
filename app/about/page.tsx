@@ -42,7 +42,7 @@ export default function About() {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-            Hi, I'm a Web Developer
+            Hi, I&apos;m a Web Developer
             <br />
             <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600 bg-clip-text text-transparent">
               Building Digital Solutions
@@ -50,7 +50,7 @@ export default function About() {
           </h1>
 
           <p className="text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
-            With 3+ years of experience, I've helped 50+ startups and local businesses establish their online presence with modern, fast, and beautiful websites.
+            With 3+ years of experience, I&apos;ve helped 50+ startups and local businesses establish their online presence with modern, fast, and beautiful websites.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 pt-8">
@@ -172,7 +172,9 @@ export default function About() {
                     <span key={i}>⭐</span>
                   ))}
                 </div>
-                <p className="text-white/80 italic text-lg leading-relaxed">"{testimonial.quote}"</p>
+                <p className="text-white/80 italic text-lg leading-relaxed">
+                  &ldquo;{testimonial.quote}&rdquo;
+                </p>
                 <div>
                   <p className="font-bold text-white text-lg">{testimonial.author}</p>
                   <p className="text-white/60 text-sm">{testimonial.role}</p>
@@ -187,9 +189,9 @@ export default function About() {
       <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="p-12 md:p-16 rounded-3xl bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-500/20 border border-white/30 text-center space-y-8">
-            <h2 className="text-3xl md:text-5xl font-bold">Let's Work Together</h2>
+            <h2 className="text-3xl md:text-5xl font-bold">Let&apos;s Work Together</h2>
             <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
-              Ready to bring your ideas to life? Let's discuss your next project and create something amazing together.
+              Ready to bring your ideas to life? Let&apos;s discuss your next project and create something amazing together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -199,7 +201,7 @@ export default function About() {
                 Start Your Project
               </a>
               <a
-                href="https://wa.me/919876543210"
+                href="https://wa.me/917385693147"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 rounded-lg border-2 border-white/30 text-white font-semibold hover:bg-white/10 hover:border-white/50 transition-all backdrop-blur-sm"

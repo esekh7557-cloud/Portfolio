@@ -82,7 +82,7 @@ export default function Projects() {
           </h1>
 
           <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
-            Here are some of the projects I've built for startups, local businesses, and established companies. Each project showcases my ability to solve real problems with modern technology.
+            Here are some of the projects I&apos;ve built for startups, local businesses, and established companies. Each project showcases my ability to solve real problems with modern technology.
           </p>
         </div>
       </section>
@@ -169,7 +169,7 @@ export default function Projects() {
           <div className="p-12 md:p-16 rounded-3xl bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-500/20 border border-white/30 text-center space-y-8">
             <h2 className="text-3xl md:text-5xl font-bold">Have a Project in Mind?</h2>
             <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
-              Let's build something amazing together. Contact me to discuss your project.
+              Let&apos;s build something amazing together. Contact me to discuss your project.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -179,7 +179,7 @@ export default function Projects() {
                 Start Your Project
               </a>
               <a
-                href="https://wa.me/919876543210"
+                href="https://wa.me/917385693147"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 rounded-lg border-2 border-white/30 text-white font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm"
