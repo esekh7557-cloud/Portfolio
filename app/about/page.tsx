@@ -87,7 +87,7 @@ export default function About() {
                 <div className="w-32 h-32 rounded-full bg-gradient-to-r from-purple-400 to-pink-600 mx-auto mb-6 flex items-center justify-center text-6xl">
                   👨‍💻
                 </div>
-                <p className="text-white font-bold text-xl">Your Portfolio Owner</p>
+                <p className="text-white font-bold text-xl">Ebrahim Sekh</p>
                 <p className="text-white/60 text-sm mt-2">Web Developer & Designer</p>
               </div>
             </div>

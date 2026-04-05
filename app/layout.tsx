@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio - Web Developer & Full-Stack Developer",
+  title: "Ebrahim Sekh - Web Developer & Full-Stack Developer",
   description: "I build modern, fast-loading websites and full-stack applications for restaurants and businesses in India. Affordable web development services starting at ₹15,000.",
-  keywords: "web developer, web development, full-stack developer, portfolio, India",
+  keywords: "Ebrahim Sekh, web developer, web development, full-stack developer, portfolio, India",
 };
 
 export default function RootLayout({

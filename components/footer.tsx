@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="space-y-4">
             <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-500 bg-clip-text text-transparent">
-              Portfolio
+              Ebrahim Sekh
             </h3>
             <p className="text-white/60 text-sm leading-relaxed">Building modern web experiences for businesses across India.</p>
           </div>
@@ -26,7 +26,7 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold mb-6 uppercase text-sm tracking-wide">Quick Links</h4>
             <div className="space-y-3">
-              <Link href="/projects" className="text-white/70 text-sm hover:text-white transition-colors duration-200 block">Portfolio</Link>
+              <Link href="/projects" className="text-white/70 text-sm hover:text-white transition-colors duration-200 block">Ebrahim Sekh</Link>
               <Link href="/about" className="text-white/70 text-sm hover:text-white transition-colors duration-200 block">About Me</Link>
               <Link href="/services" className="text-white/70 text-sm hover:text-white transition-colors duration-200 block">Services</Link>
               <Link href="/contact" className="text-white/70 text-sm hover:text-white transition-colors duration-200 block">Contact</Link>

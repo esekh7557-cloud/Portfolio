@@ -17,7 +17,7 @@ export default function Home() {
           <div className="space-y-6">
             <div className="inline-block">
               <span className="px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 text-sm font-semibold border border-purple-500/50 backdrop-blur-sm">
-                ✨ Welcome to My Portfolio
+                ✨ Ebrahim Sekh
               </span>
             </div>
 

@@ -73,7 +73,7 @@ export default function Projects() {
         <div className="max-w-5xl mx-auto text-center w-full space-y-8">
           <div className="inline-block">
             <span className="px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 text-sm font-semibold border border-purple-500/50 backdrop-blur-sm">
-              ✨ Portfolio Showcase
+              ✨ Ebrahim Sekh Projects
             </span>
           </div>
 
