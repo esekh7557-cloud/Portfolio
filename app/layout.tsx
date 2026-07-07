@@ -35,11 +35,13 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-charcoal text-charcoal-100 font-sans relative">
+      <body className="min-h-full bg-charcoal text-charcoal-100 font-sans">
         <BackgroundAnimation />
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+        <div className="relative z-10 min-h-screen flex flex-col">
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
