@@ -17,7 +17,7 @@ export default function AboutSection() {
       <div className="divider-line w-full max-w-6xl mx-auto mb-14 md:mb-20"></div>
 
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 sm:gap-16 lg:gap-20 items-start">
           {/* Left — Portrait */}
           <div className="lg:col-span-2 reveal-left">
             <div className="relative aspect-[3/4] max-w-sm mx-auto lg:mx-0 rounded-2xl overflow-hidden bg-charcoal-900 border border-charcoal-700/30 shadow-2xl shadow-cobalt-950/40">
@@ -83,7 +83,7 @@ export default function AboutSection() {
             </div>
 
             {/* Quick stats */}
-            <div className="grid grid-cols-3 gap-6 pt-6 border-t border-charcoal-800">
+            <div className="grid grid-cols-3 gap-4 sm:gap-6 pt-6 border-t border-charcoal-800">
               {[
                 { value: '50+', label: 'Projects Shipped' },
                 { value: '3+', label: 'Years Building' },

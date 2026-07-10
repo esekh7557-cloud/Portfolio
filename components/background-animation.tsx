@@ -14,6 +14,19 @@ type NodePoint = {
   speed: number;
 };
 
+type Connection = [from: number, to: number];
+
+type ConnectionCandidate = {
+  from: number;
+  to: number;
+  distance: number;
+};
+
+const clamp = (value: number, minimum: number, maximum: number) =>
+  Math.min(Math.max(value, minimum), maximum);
+
+const NETWORK_SPEED = 1.7;
+
 const svgGlowNodes = [
   { cx: 716, cy: 708, radius: 2.6, delay: '0s' },
   { cx: 856, cy: 636, radius: 2.2, delay: '1.1s' },
@@ -38,10 +51,15 @@ const makeRandom = (seed: number) => {
 const createNodes = (width: number, height: number) => {
   const random = makeRandom(42);
   const nodes: NodePoint[] = [];
-  const isCompact = width < 768;
-  const rightCount = isCompact ? 34 : 56;
-  const lowerCount = isCompact ? 24 : 42;
-  const sparseCount = isCompact ? 8 : 14;
+  const density = clamp(
+    Math.sqrt((width * height) / (1366 * 768)),
+    0.42,
+    1,
+  );
+  const orbitScale = clamp(Math.min(width, height) / 768, 0.72, 1.12);
+  const rightCount = Math.round(56 * density);
+  const lowerCount = Math.round(42 * density);
+  const sparseCount = Math.round(14 * density);
 
   const pushNode = (baseX: number, baseY: number, emphasis = 1) => {
     nodes.push({
@@ -51,9 +69,9 @@ const createNodes = (width: number, height: number) => {
       y: baseY,
       radius: (1.2 + random() * 2.2) * emphasis,
       glow: 0.45 + random() * 0.55,
-      orbit: 8 + random() * 18,
+      orbit: (8 + random() * 18) * orbitScale,
       phase: random() * Math.PI * 2,
-      speed: 0.16 + random() * 0.32,
+      speed: 0.38 + random() * 0.32,
     });
   };
 
@@ -81,6 +99,47 @@ const createNodes = (width: number, height: number) => {
   }
 
   return nodes;
+};
+
+const createConnections = (
+  nodes: NodePoint[],
+  width: number,
+  height: number,
+) => {
+  const maxDistance = clamp(Math.min(width, height) * 0.18, 68, 152);
+  const maxConnections = width < 640 ? 2 : 3;
+  const candidates: ConnectionCandidate[] = [];
+  const connectionCounts = new Array(nodes.length).fill(0) as number[];
+
+  for (let i = 0; i < nodes.length; i += 1) {
+    for (let j = i + 1; j < nodes.length; j += 1) {
+      const distance = Math.hypot(
+        nodes[i].baseX - nodes[j].baseX,
+        nodes[i].baseY - nodes[j].baseY,
+      );
+
+      if (distance < maxDistance) {
+        candidates.push({ from: i, to: j, distance });
+      }
+    }
+  }
+
+  candidates.sort((a, b) => a.distance - b.distance);
+
+  return candidates.reduce<Connection[]>((connections, candidate) => {
+    const { from, to } = candidate;
+
+    if (
+      connectionCounts[from] < maxConnections &&
+      connectionCounts[to] < maxConnections
+    ) {
+      connections.push([from, to]);
+      connectionCounts[from] += 1;
+      connectionCounts[to] += 1;
+    }
+
+    return connections;
+  }, []);
 };
 
 const drawCurve = (
@@ -115,9 +174,20 @@ const drawFlowingMesh = (
   context.lineCap = 'round';
   context.lineJoin = 'round';
 
-  for (let row = 0; row < 18; row += 1) {
+  const horizontalRows = Math.round(
+    18 * clamp(height / 768, 0.56, 1.15),
+  );
+  const horizontalColumns = Math.round(
+    15 * clamp(width / 1366, 0.5, 1.15),
+  );
+  const rightRows = Math.round(16 * clamp(height / 768, 0.56, 1.15));
+  const rightColumns = Math.round(
+    11 * clamp(width / 1366, 0.5, 1.15),
+  );
+
+  for (let row = 0; row < horizontalRows; row += 1) {
     const points: Array<[number, number]> = [];
-    const rowOffset = row / 17;
+    const rowOffset = row / (horizontalRows - 1);
 
     for (let step = 0; step <= 52; step += 1) {
       const progress = step / 52;
@@ -141,9 +211,9 @@ const drawFlowingMesh = (
     drawCurve(context, points);
   }
 
-  for (let column = 0; column < 15; column += 1) {
+  for (let column = 0; column < horizontalColumns; column += 1) {
     const points: Array<[number, number]> = [];
-    const columnOffset = column / 14;
+    const columnOffset = column / (horizontalColumns - 1);
 
     for (let step = 0; step <= 44; step += 1) {
       const progress = step / 44;
@@ -166,9 +236,9 @@ const drawFlowingMesh = (
     drawCurve(context, points);
   }
 
-  for (let row = 0; row < 16; row += 1) {
+  for (let row = 0; row < rightRows; row += 1) {
     const points: Array<[number, number]> = [];
-    const rowOffset = row / 15;
+    const rowOffset = row / (rightRows - 1);
 
     for (let step = 0; step <= 44; step += 1) {
       const progress = step / 44;
@@ -190,9 +260,9 @@ const drawFlowingMesh = (
     drawCurve(context, points);
   }
 
-  for (let column = 0; column < 11; column += 1) {
+  for (let column = 0; column < rightColumns; column += 1) {
     const points: Array<[number, number]> = [];
-    const columnOffset = column / 10;
+    const columnOffset = column / (rightColumns - 1);
 
     for (let step = 0; step <= 36; step += 1) {
       const progress = step / 36;
@@ -218,30 +288,30 @@ const drawFlowingMesh = (
 const drawConnections = (
   context: CanvasRenderingContext2D,
   nodes: NodePoint[],
+  connections: Connection[],
   width: number,
+  height: number,
 ) => {
-  const maxDistance = width < 768 ? 124 : 158;
+  const maxDistance = clamp(Math.min(width, height) * 0.18, 68, 152);
 
   context.save();
   context.lineWidth = 0.75;
 
-  for (let i = 0; i < nodes.length; i += 1) {
-    for (let j = i + 1; j < nodes.length; j += 1) {
-      const dx = nodes[i].x - nodes[j].x;
-      const dy = nodes[i].y - nodes[j].y;
-      const distance = Math.hypot(dx, dy);
+  connections.forEach(([from, to]) => {
+    const first = nodes[from];
+    const second = nodes[to];
+    const distance = Math.hypot(first.x - second.x, first.y - second.y);
 
-      if (distance < maxDistance) {
-        const alpha = (1 - distance / maxDistance) * 0.28;
+    if (distance < maxDistance) {
+      const alpha = (1 - distance / maxDistance) * 0.34;
 
-        context.strokeStyle = `rgba(75, 178, 255, ${alpha})`;
-        context.beginPath();
-        context.moveTo(nodes[i].x, nodes[i].y);
-        context.lineTo(nodes[j].x, nodes[j].y);
-        context.stroke();
-      }
+      context.strokeStyle = `rgba(75, 178, 255, ${alpha})`;
+      context.beginPath();
+      context.moveTo(first.x, first.y);
+      context.lineTo(second.x, second.y);
+      context.stroke();
     }
-  }
+  });
 
   context.restore();
 };
@@ -300,7 +370,9 @@ export default function BackgroundAnimation() {
     let height = 0;
     let pixelRatio = 1;
     let nodes: NodePoint[] = [];
+    let connections: Connection[] = [];
     let animationFrame = 0;
+    let animationStart: number | null = null;
 
     const resize = () => {
       width = window.innerWidth;
@@ -314,10 +386,12 @@ export default function BackgroundAnimation() {
 
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       nodes = createNodes(width, height);
+      connections = createConnections(nodes, width, height);
     };
 
-    const paint = (time = 0) => {
-      const seconds = time * 0.001;
+    const paint = (time = window.performance.now()) => {
+      animationStart ??= time;
+      const seconds = (time - animationStart) * 0.001 * NETWORK_SPEED;
 
       context.clearRect(0, 0, width, height);
       drawFlowingMesh(context, width, height, seconds);
@@ -332,7 +406,7 @@ export default function BackgroundAnimation() {
             0.7;
       });
 
-      drawConnections(context, nodes, width);
+      drawConnections(context, nodes, connections, width, height);
       drawNodes(context, nodes);
 
       if (!reduceMotion) {
@@ -356,7 +430,16 @@ export default function BackgroundAnimation() {
       className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-[#020916]"
       aria-hidden="true"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_28%,rgba(20,116,205,0.28),transparent_34%),radial-gradient(circle_at_42%_72%,rgba(14,83,147,0.22),transparent_42%),linear-gradient(115deg,#020916_0%,#04152a_46%,#03101f_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_28%,rgba(20,116,205,0.28),transparent_34%),radial-gradient(circle_at_42%_72%,rgba(14,83,147,0.22),transparent_42%),linear-gradient(115deg,#020916_0%,#04152a_46%,#03101f_100%)] background-aurora-shift" />
+      <div className="background-drift-slow absolute left-[-12%] top-[-14%] h-[36rem] w-[36rem] rounded-full bg-cobalt-500/12 blur-[140px]" />
+      <div
+        className="background-drift-medium absolute right-[-10%] top-[12%] h-[30rem] w-[30rem] rounded-full bg-sky-300/12 blur-[130px]"
+        style={{ animationDelay: '-7s' }}
+      />
+      <div
+        className="background-drift-slow absolute bottom-[-18%] left-[28%] h-[28rem] w-[28rem] rounded-full bg-cobalt-400/10 blur-[120px]"
+        style={{ animationDelay: '-12s' }}
+      />
       <canvas
         ref={canvasRef}
         className="absolute inset-0 h-full w-full opacity-95"
@@ -364,7 +447,7 @@ export default function BackgroundAnimation() {
       <svg
         className="absolute inset-0 h-full w-full opacity-70 [mask-image:linear-gradient(90deg,transparent_0%,transparent_34%,rgba(0,0,0,0.72)_54%,black_100%)]"
         viewBox="0 0 1366 768"
-        preserveAspectRatio="none"
+        preserveAspectRatio="xMaxYMid slice"
       >
         <defs>
           <linearGradient id="mesh-line" x1="0" x2="1" y1="0" y2="1">
@@ -383,7 +466,7 @@ export default function BackgroundAnimation() {
         <g fill="none" stroke="url(#mesh-line)" strokeLinecap="round">
           <animateTransform
             attributeName="transform"
-            dur="18s"
+            dur="10s"
             repeatCount="indefinite"
             type="translate"
             values="0 0; -18 10; 0 0"
@@ -437,7 +520,7 @@ export default function BackgroundAnimation() {
               <animate
                 attributeName="opacity"
                 begin={delay}
-                dur="4.6s"
+                dur="3.2s"
                 repeatCount="indefinite"
                 values="0.34;0.95;0.34"
               />
@@ -447,9 +530,9 @@ export default function BackgroundAnimation() {
       </svg>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_0%_22%,rgba(2,9,22,0.98)_0%,rgba(2,9,22,0.78)_28%,rgba(2,9,22,0.08)_64%,transparent_100%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,9,22,0.95)_0%,rgba(2,9,22,0.68)_32%,rgba(2,9,22,0.04)_72%,transparent_100%)]" />
-      <div className="absolute inset-0 opacity-[0.045] mix-blend-screen [background-image:radial-gradient(circle,rgba(125,211,252,0.9)_1px,transparent_1px)] [background-size:38px_38px]" />
+      <div className="background-pan-slow absolute inset-0 opacity-[0.05] mix-blend-screen [background-image:radial-gradient(circle,rgba(125,211,252,0.9)_1px,transparent_1px)] [background-size:38px_38px]" />
       <div
-        className="absolute inset-0 opacity-[0.035] mix-blend-overlay"
+        className="background-pan-reverse absolute inset-0 opacity-[0.035] mix-blend-overlay"
         style={{
           backgroundImage:
             'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.82\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")',

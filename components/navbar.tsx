@@ -21,13 +21,25 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const handleNavClick = () => setIsOpen(false);
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-charcoal/90 backdrop-blur-xl border-b border-charcoal-800'
+        scrolled || isOpen
+          ? 'bg-charcoal/95 backdrop-blur-xl border-b border-charcoal-800'
           : 'bg-transparent'
       }`}
     >
@@ -73,17 +85,17 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            isOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+          className={`md:hidden overflow-hidden transition-all duration-400 ease-in-out ${
+            isOpen ? 'max-h-[28rem] opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
-          <div className="pb-6 pt-2 space-y-1 border-t border-charcoal-800">
+          <div className="pb-8 pt-4 space-y-1 border-t border-charcoal-700/50">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={handleNavClick}
-                className="block text-charcoal-400 hover:text-white transition-colors py-3 px-4 text-sm font-medium"
+                className="block text-charcoal-300 hover:text-white hover:bg-white/[0.04] transition-all duration-200 py-3.5 px-5 text-base font-medium rounded-lg mx-1"
               >
                 {link.label}
               </a>
@@ -91,7 +103,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={handleNavClick}
-              className="block mx-4 mt-3 px-5 py-3 bg-cobalt-600 text-white rounded-lg font-medium text-sm text-center hover:bg-cobalt-500 transition-all"
+              className="block mx-4 mt-4 px-5 py-3.5 bg-cobalt-600 text-white rounded-xl font-medium text-sm text-center hover:bg-cobalt-500 transition-all shadow-lg shadow-cobalt-600/20"
             >
               Get In Touch
             </a>

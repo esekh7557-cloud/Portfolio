@@ -88,19 +88,19 @@ export default function ContactSection() {
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-12 md:mb-16 reveal">
           <span className="section-label">Contact</span>
-          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold font-heading text-white tracking-tight mb-6">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold font-heading text-white tracking-tight mb-6">
             Have a project
             <br />
             <span className="gradient-text">in mind?</span>
           </h2>
-          <p className="text-charcoal-300 text-lg max-w-lg mx-auto">
+          <p className="text-charcoal-300 text-base sm:text-lg max-w-lg mx-auto px-2 sm:px-0">
             Let&apos;s create something extraordinary together. Reach out and
             let&apos;s discuss your next big idea.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-5 gap-10 lg:gap-16">
-          <div className="md:col-span-2 space-y-8 reveal-left">
+        <div className="grid md:grid-cols-5 gap-8 sm:gap-10 lg:gap-16">
+          <div className="md:col-span-2 space-y-6 sm:space-y-8 reveal-left">
             <div className="space-y-4 text-sm">
               <div>
                 <p className="text-charcoal-500 text-xs uppercase tracking-wider mb-1">

@@ -102,7 +102,7 @@ export default function ProjectsSection() {
         </div>
 
         {/* Case Studies - Alternating Layout */}
-        <div className="space-y-20 md:space-y-28">
+        <div className="space-y-14 sm:space-y-20 md:space-y-28">
           {caseStudies.map((project, index) => {
             const isEven = index % 2 === 0;
 

@@ -8,6 +8,7 @@
 /* ── Base Styles ── */
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -84,19 +85,21 @@ body {
 @layer components {
   /* Primary CTA — Matte Cobalt */
   .btn-primary {
-    @apply relative px-8 py-4 bg-cobalt-600 text-white font-semibold rounded-lg
+    @apply relative px-6 py-3.5 sm:px-8 sm:py-4 bg-cobalt-600 text-white font-semibold rounded-lg
            hover:bg-cobalt-500
            transition-all duration-300 ease-out
            transform hover:scale-[1.02]
            shadow-lg shadow-cobalt-600/20
-           hover:shadow-xl hover:shadow-cobalt-600/30;
+           hover:shadow-xl hover:shadow-cobalt-600/30
+           text-sm sm:text-base;
   }
 
   /* Secondary CTA — Ghost */
   .btn-ghost {
-    @apply px-8 py-4 rounded-lg border border-charcoal-600 text-charcoal-300 font-semibold
+    @apply px-6 py-3.5 sm:px-8 sm:py-4 rounded-lg border border-charcoal-600 text-charcoal-300 font-semibold
            hover:border-charcoal-400 hover:text-white hover:bg-white/[0.03]
-           transition-all duration-300;
+           transition-all duration-300
+           text-sm sm:text-base;
   }
 
   /* Gradient Text (Cobalt) */
@@ -106,12 +109,12 @@ body {
 
   /* Section Heading */
   .section-heading {
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold font-heading tracking-tight text-white;
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-heading tracking-tight text-white;
   }
 
   /* Section Subheading */
   .section-subheading {
-    @apply text-lg text-charcoal-300 max-w-2xl leading-relaxed;
+    @apply text-base sm:text-lg text-charcoal-300 max-w-2xl leading-relaxed;
   }
 
   /* Section Label */
@@ -204,3 +207,104 @@ body {
 .animation-delay-2000 { animation-delay: 2s; }
 .animation-delay-4000 { animation-delay: 4s; }
 
+/* ── Mobile-specific Overrides ── */
+@media (max-width: 639px) {
+  /* Reduce reveal animation distances on small screens */
+  .reveal {
+    transform: translateY(20px);
+  }
+
+  .reveal-left {
+    transform: translateX(-24px);
+  }
+
+  .reveal-right {
+    transform: translateX(24px);
+  }
+
+  /* Tighter section padding on mobile */
+  .bento-card {
+    padding: 1.25rem;
+  }
+}
+
+@keyframes backgroundDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, -5%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-3%, 4%, 0) scale(0.96);
+  }
+}
+
+@keyframes backgroundDriftAlt {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-5%, 4%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(4%, -3%, 0) scale(0.98);
+  }
+}
+
+@keyframes backgroundPan {
+  0% {
+    transform: translate3d(0, 0, 0);
+    background-position: 0 0;
+  }
+  100% {
+    transform: translate3d(-2.5%, -2%, 0);
+    background-position: 38px 54px;
+  }
+}
+
+@keyframes backgroundPanReverse {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1.03);
+    background-position: 0 0;
+  }
+  100% {
+    transform: translate3d(2%, 1.5%, 0) scale(1.08);
+    background-position: -48px -36px;
+  }
+}
+
+.background-aurora-shift {
+  animation: backgroundDriftAlt 16s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.background-drift-slow {
+  animation: backgroundDrift 12s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.background-drift-medium {
+  animation: backgroundDriftAlt 10s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.background-pan-slow {
+  animation: backgroundPan 16s linear infinite;
+  will-change: transform, background-position;
+}
+
+.background-pan-reverse {
+  animation: backgroundPanReverse 20s linear infinite alternate;
+  will-change: transform, background-position;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .background-aurora-shift,
+  .background-drift-slow,
+  .background-drift-medium,
+  .background-pan-slow,
+  .background-pan-reverse {
+    animation: none;
+  }
+}

@@ -13,12 +13,12 @@ export default function HeroSection() {
 
       <div className="max-w-5xl mx-auto text-center relative z-10">
         {/* Overline */}
-        <p className="hero-animate hero-delay-1 text-cobalt-400 text-sm font-medium tracking-[0.25em] uppercase mb-8">
+        <p className="hero-animate hero-delay-1 text-cobalt-400 text-xs sm:text-sm font-medium tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-6 sm:mb-8">
           Software Developer &middot; Strategic Technologist
         </p>
 
         {/* Main Headline */}
-        <h1 className="hero-animate hero-delay-2 text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold font-heading leading-[1.05] tracking-tight text-white mb-8">
+        <h1 className="hero-animate hero-delay-2 text-[2.5rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold font-heading leading-[1.08] sm:leading-[1.05] tracking-tight text-white mb-6 sm:mb-8">
           Engineering Scalable
           <br />
           <span className="gradient-text">Web Solutions</span> &
@@ -27,7 +27,7 @@ export default function HeroSection() {
         </h1>
 
         {/* Subheadline */}
-        <p className="hero-animate hero-delay-3 text-lg md:text-xl text-charcoal-300 max-w-2xl mx-auto leading-relaxed mb-12">
+        <p className="hero-animate hero-delay-3 text-base sm:text-lg md:text-xl text-charcoal-300 max-w-2xl mx-auto leading-relaxed mb-10 sm:mb-12 px-2 sm:px-0">
           I combine deep software engineering expertise with a strategic
           business mindset to build products that are technically excellent
           and commercially impactful.
