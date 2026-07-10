@@ -27,6 +27,17 @@ const caseStudies: CaseStudy[] = [
     liveUrl: 'https://furniture-flame-three.vercel.app/',
   },
   {
+    title: 'Cafe Bhonsle Website',
+    subtitle: 'Restaurant Website x Ordering Flow',
+    problem:
+      'Local cafes need a digital presence that communicates atmosphere, builds trust quickly, and turns visitors into table reservations, menu views, or direct orders.',
+    solution:
+      'Built a responsive cafe website with a cinematic storefront hero, menu and gallery navigation, Google-rating social proof, reserve-table CTA, and floating order/WhatsApp actions for fast customer conversion.',
+    tech: ['React', 'Tailwind CSS', 'WhatsApp CTA', 'Vercel'],
+    image: '/projects/cafe-bhonsle.png',
+    liveUrl: 'https://cafe-bhonsle.vercel.app/',
+  },
+  {
     title: 'AI-Powered Attendance System',
     subtitle: 'Computer Vision × Full-Stack',
     problem:
