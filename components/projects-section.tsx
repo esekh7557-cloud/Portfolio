@@ -39,7 +39,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     title: 'Smart Inventory Manager',
-    subtitle: 'Predictive Analytics Ã— SaaS',
+    subtitle: 'Predictive Analytics x SaaS',
     problem:
       'Businesses were losing revenue from stockouts and overstock situations, relying on manual inventory checks and guesswork.',
     solution:
@@ -51,7 +51,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     title: 'IoT Monitoring Dashboard',
-    subtitle: 'Hardware Integration Ã— Real-Time',
+    subtitle: 'Hardware Integration x Real-Time',
     problem:
       'Industrial facilities needed a unified view of dozens of IoT sensors across multiple zones, with instant alerting for anomalies.',
     solution:
@@ -62,11 +62,11 @@ const caseStudies: CaseStudy[] = [
   },
   {
     title: 'Digital Agency Platform',
-    subtitle: 'Multi-Tenant Ã— Admin System',
+    subtitle: 'Multi-Tenant x Admin System',
     problem:
       'A growing agency needed a centralized platform to manage client projects, team workflows, and deliverables across multiple accounts.',
     solution:
-      'Architected a multi-tenant admin platform with role-based access, project pipelines, client portals, and integrated invoicing â€” all on a Supabase-powered backend.',
+      'Architected a multi-tenant admin platform with role-based access, project pipelines, client portals, and integrated invoicing - all on a Supabase-powered backend.',
     tech: ['Next.js', 'Tailwind CSS', 'Supabase', 'TypeScript'],
     image: '/projects/agency-platform.png',
     liveUrl: '#',
@@ -96,12 +96,12 @@ export default function ProjectsSection() {
             <span className="gradient-text">speak for themselves.</span>
           </h2>
           <p className="section-subheading">
-            A curated selection of deep-dive case studies â€” each showcasing
-            the intersection of engineering, design, and strategic thinking.
+            A curated selection of deep-dive case studies - each showcasing the
+            intersection of engineering, design, and strategic thinking.
           </p>
         </div>
 
-        {/* Case Studies â€” Alternating Layout */}
+        {/* Case Studies - Alternating Layout */}
         <div className="space-y-20 md:space-y-28">
           {caseStudies.map((project, index) => {
             const isEven = index % 2 === 0;
@@ -122,7 +122,7 @@ export default function ProjectsSection() {
                   <div className="relative aspect-[16/10] bg-charcoal-900 rounded-2xl overflow-hidden border border-charcoal-700/30">
                     <Image
                       src={project.image}
-                      alt={`${project.title} â€” case study mockup`}
+                      alt={`${project.title} - case study mockup`}
                       fill
                       className="object-cover"
                       sizes="(max-width: 1024px) 100vw, 50vw"
@@ -148,13 +148,13 @@ export default function ProjectsSection() {
                   <div className="space-y-4 text-charcoal-300 leading-relaxed">
                     <p>
                       <span className="text-charcoal-400 text-sm font-medium uppercase tracking-wider">
-                        Problem â€”{' '}
+                        Problem -{' '}
                       </span>
                       {project.problem}
                     </p>
                     <p>
                       <span className="text-charcoal-400 text-sm font-medium uppercase tracking-wider">
-                        Solution â€”{' '}
+                        Solution -{' '}
                       </span>
                       {project.solution}
                     </p>
@@ -178,7 +178,7 @@ export default function ProjectsSection() {
                         rel="noopener noreferrer"
                         className="text-sm font-medium text-cobalt-400 hover:text-cobalt-300 transition-colors underline underline-offset-4 decoration-cobalt-400/30 hover:decoration-cobalt-300"
                       >
-                        View Live â†—
+                        View Live -&gt;
                       </a>
                     )}
                     {project.githubUrl && (
@@ -188,7 +188,7 @@ export default function ProjectsSection() {
                         rel="noopener noreferrer"
                         className="text-sm font-medium text-charcoal-400 hover:text-white transition-colors underline underline-offset-4 decoration-charcoal-600 hover:decoration-charcoal-400"
                       >
-                        Source Code â†—
+                        Source Code -&gt;
                       </a>
                     )}
                   </div>
