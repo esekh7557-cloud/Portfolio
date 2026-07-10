@@ -93,14 +93,14 @@ export default function ProjectsSection() {
     <section
       id="work"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="relative py-28 md:py-40 px-4 sm:px-6 lg:px-8"
+      className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8"
     >
       {/* Section Divider */}
-      <div className="divider-line w-full max-w-6xl mx-auto mb-28 md:mb-40"></div>
+      <div className="divider-line w-full max-w-6xl mx-auto mb-14 md:mb-20"></div>
 
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="mb-20 md:mb-28 max-w-2xl reveal">
+        <div className="mb-12 md:mb-16 max-w-2xl reveal">
           <span className="section-label">Selected Works</span>
           <h2 className="section-heading mb-6">
             Projects that
@@ -114,7 +114,7 @@ export default function ProjectsSection() {
         </div>
 
         {/* Case Studies — Alternating Layout */}
-        <div className="space-y-28 md:space-y-40">
+        <div className="space-y-20 md:space-y-28">
           {caseStudies.map((project, index) => {
             const isEven = index % 2 === 0;
 

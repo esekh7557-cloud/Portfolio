@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 import { useScrollReveal } from './use-scroll-reveal';
 
 export default function AboutSection() {
@@ -9,28 +11,23 @@ export default function AboutSection() {
     <section
       id="about"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="relative py-28 md:py-40 px-4 sm:px-6 lg:px-8"
+      className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8"
     >
       {/* Section Divider */}
-      <div className="divider-line w-full max-w-6xl mx-auto mb-28 md:mb-40"></div>
+      <div className="divider-line w-full max-w-6xl mx-auto mb-14 md:mb-20"></div>
 
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-20 items-start">
           {/* Left — Portrait */}
           <div className="lg:col-span-2 reveal-left">
-            <div className="relative aspect-[3/4] max-w-sm mx-auto lg:mx-0 rounded-2xl overflow-hidden bg-charcoal-900 border border-charcoal-700/30">
-              {/* Stylized avatar placeholder */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cobalt-600/20 via-charcoal-900 to-charcoal-800 flex items-center justify-center">
-                <div className="text-center">
-                  <span className="text-7xl font-bold font-heading gradient-text">
-                    ES
-                  </span>
-                  <p className="text-charcoal-500 text-sm mt-3 tracking-wider">
-                    Goa, India
-                  </p>
-                </div>
-              </div>
-              {/* Subtle corner accent */}
+            <div className="relative aspect-[3/4] max-w-sm mx-auto lg:mx-0 rounded-2xl overflow-hidden bg-charcoal-900 border border-charcoal-700/30 shadow-2xl shadow-cobalt-950/40">
+              <Image
+                src="/profile-photo.jpeg"
+                alt="Portrait of Ebrahim Sekh"
+                fill
+                sizes="(min-width: 1024px) 22rem, (min-width: 640px) 24rem, 100vw"
+                className="object-cover"
+              />
               <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cobalt-600/10 to-transparent"></div>
             </div>
           </div>

@@ -94,14 +94,14 @@ export default function ServicesSection() {
     <section
       id="services"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="relative py-28 md:py-40 px-4 sm:px-6 lg:px-8"
+      className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8"
     >
       {/* Section Divider */}
-      <div className="divider-line w-full max-w-6xl mx-auto mb-28 md:mb-40"></div>
+      <div className="divider-line w-full max-w-6xl mx-auto mb-14 md:mb-20"></div>
 
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="mb-16 md:mb-20 max-w-2xl reveal">
+        <div className="mb-12 md:mb-16 max-w-2xl reveal">
           <span className="section-label">Services & Arsenal</span>
           <h2 className="section-heading mb-6">
             What I <span className="gradient-text">bring to the table.</span>

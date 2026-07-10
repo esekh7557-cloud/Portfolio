@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Send, Calendar } from 'lucide-react';
+import { Send } from 'lucide-react';
+
 import { useScrollReveal } from './use-scroll-reveal';
 
 const GithubIcon = ({ size = 20 }: { size?: number }) => (
@@ -10,11 +11,7 @@ const GithubIcon = ({ size = 20 }: { size?: number }) => (
   </svg>
 );
 
-const LinkedinIcon = ({ size = 20 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-  </svg>
-);
+type SubmissionState = 'idle' | 'sending' | 'success' | 'error';
 
 export default function ContactSection() {
   const sectionRef = useScrollReveal();
@@ -23,33 +20,73 @@ export default function ContactSection() {
     email: '',
     message: '',
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [submissionState, setSubmissionState] =
+    useState<SubmissionState>('idle');
+  const [feedbackMessage, setFeedbackMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-    setFormData({ name: '', email: '', message: '' });
+    setSubmissionState('sending');
+    setFeedbackMessage('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(
+          result?.error ?? 'Unable to send your message right now.'
+        );
+      }
+
+      setSubmissionState('success');
+      setFeedbackMessage('Message sent successfully.');
+      setFormData({ name: '', email: '', message: '' });
+
+      window.setTimeout(() => {
+        setSubmissionState('idle');
+        setFeedbackMessage('');
+      }, 4000);
+    } catch (error) {
+      setSubmissionState('error');
+      setFeedbackMessage(
+        error instanceof Error
+          ? error.message
+          : 'Something went wrong while sending your message.'
+      );
+    }
   };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+
+    if (submissionState !== 'idle') {
+      setSubmissionState('idle');
+      setFeedbackMessage('');
+    }
   };
 
   return (
     <section
       id="contact"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="relative py-28 md:py-40 px-4 sm:px-6 lg:px-8"
+      className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8"
     >
-      {/* Section Divider */}
-      <div className="divider-line w-full max-w-6xl mx-auto mb-28 md:mb-40"></div>
+      <div className="divider-line w-full max-w-6xl mx-auto mb-14 md:mb-20"></div>
 
       <div className="max-w-5xl mx-auto relative z-10">
-        {/* Massive Headline */}
-        <div className="text-center mb-16 md:mb-20 reveal">
+        <div className="text-center mb-12 md:mb-16 reveal">
           <span className="section-label">Contact</span>
           <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold font-heading text-white tracking-tight mb-6">
             Have a project
@@ -57,43 +94,38 @@ export default function ContactSection() {
             <span className="gradient-text">in mind?</span>
           </h2>
           <p className="text-charcoal-300 text-lg max-w-lg mx-auto">
-            Let&apos;s create something extraordinary together. Reach out
-            and let&apos;s discuss your next big idea.
+            Let&apos;s create something extraordinary together. Reach out and
+            let&apos;s discuss your next big idea.
           </p>
         </div>
 
         <div className="grid md:grid-cols-5 gap-10 lg:gap-16">
-          {/* Left — Info + Book a Call */}
           <div className="md:col-span-2 space-y-8 reveal-left">
-            {/* Book a Call */}
-            <a
-              href="#"
-              className="group flex items-center gap-4 p-5 rounded-2xl bg-charcoal-900 border border-charcoal-700/50 hover:border-cobalt-600/30 hover:bg-charcoal-800/80 transition-all duration-300"
-            >
-              <div className="p-3 rounded-xl bg-cobalt-600/10 text-cobalt-400 group-hover:bg-cobalt-600/20 transition-colors">
-                <Calendar size={22} />
-              </div>
-              <div>
-                <p className="text-white font-medium text-sm">Book a Call</p>
-                <p className="text-charcoal-500 text-xs mt-0.5">
-                  Schedule a 30-min discovery call
-                </p>
-              </div>
-            </a>
-
-            {/* Contact Details */}
             <div className="space-y-4 text-sm">
               <div>
                 <p className="text-charcoal-500 text-xs uppercase tracking-wider mb-1">
                   Email
                 </p>
                 <a
-                  href="mailto:digitquo@gmail.com"
+                  href="mailto:esekh7557@gmail.com"
                   className="text-charcoal-200 hover:text-cobalt-400 transition-colors"
                 >
-                  digitquo@gmail.com
+                  esekh7557@gmail.com
                 </a>
               </div>
+
+              <div>
+                <p className="text-charcoal-500 text-xs uppercase tracking-wider mb-1">
+                  Phone
+                </p>
+                <a
+                  href="tel:7385693147"
+                  className="text-charcoal-200 hover:text-cobalt-400 transition-colors"
+                >
+                  7385693147
+                </a>
+              </div>
+
               <div>
                 <p className="text-charcoal-500 text-xs uppercase tracking-wider mb-1">
                   Location
@@ -102,7 +134,6 @@ export default function ContactSection() {
               </div>
             </div>
 
-            {/* Social Links */}
             <div className="pt-4 border-t border-charcoal-800">
               <div className="flex gap-3">
                 <a
@@ -114,20 +145,10 @@ export default function ContactSection() {
                 >
                   <GithubIcon size={18} />
                 </a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-xl bg-charcoal-900 border border-charcoal-700/50 text-charcoal-400 hover:text-white hover:border-charcoal-600 transition-all duration-300"
-                  aria-label="LinkedIn"
-                >
-                  <LinkedinIcon size={18} />
-                </a>
               </div>
             </div>
           </div>
 
-          {/* Right — Contact Form */}
           <div className="md:col-span-3 reveal-right">
             <form
               onSubmit={handleSubmit}
@@ -167,6 +188,7 @@ export default function ContactSection() {
                   onChange={handleChange}
                   placeholder="your@email.com"
                   required
+                  suppressHydrationWarning
                   className="input-field"
                 />
               </div>
@@ -192,18 +214,17 @@ export default function ContactSection() {
 
               <button
                 type="submit"
-                disabled={submitted}
+                disabled={submissionState === 'sending'}
                 className={`btn-primary w-full flex items-center justify-center gap-2 ${
-                  submitted
+                  submissionState === 'success'
                     ? '!bg-emerald-600 !shadow-emerald-600/20'
                     : ''
                 }`}
               >
-                {submitted ? (
-                  <>
-                    <span>Message Sent!</span>
-                    <span>✓</span>
-                  </>
+                {submissionState === 'sending' ? (
+                  <span>Sending...</span>
+                ) : submissionState === 'success' ? (
+                  <span>Message Sent!</span>
                 ) : (
                   <>
                     <span>Send Message</span>
@@ -211,6 +232,19 @@ export default function ContactSection() {
                   </>
                 )}
               </button>
+
+              {feedbackMessage ? (
+                <p
+                  className={`text-sm ${
+                    submissionState === 'error'
+                      ? 'text-rose-400'
+                      : 'text-emerald-400'
+                  }`}
+                  aria-live="polite"
+                >
+                  {feedbackMessage}
+                </p>
+              ) : null}
             </form>
           </div>
         </div>
