@@ -16,6 +16,17 @@ interface CaseStudy {
 
 const caseStudies: CaseStudy[] = [
   {
+    title: 'Digital Atelier Furniture Store',
+    subtitle: 'E-Commerce x Product Experience',
+    problem:
+      'Furniture brands need a storefront that feels premium while still making browsing, collection discovery, and product exploration effortless for shoppers.',
+    solution:
+      'Created a minimalist furniture commerce experience for Digital Atelier with a polished hero, curated collection flow, lookbook-focused navigation, and responsive product presentation designed to make high-end furniture feel tactile online.',
+    tech: ['React', 'Tailwind CSS', 'Responsive UI', 'Vercel'],
+    image: '/projects/digital-atelier.png',
+    liveUrl: 'https://furniture-flame-three.vercel.app/',
+  },
+  {
     title: 'AI-Powered Attendance System',
     subtitle: 'Computer Vision × Full-Stack',
     problem:
